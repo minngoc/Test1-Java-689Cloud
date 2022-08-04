@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 
 public class Student {
-    private String ID;
+    private int ID;
     private String firstName, middleName, lastName;
     private myDate dob;
     private String address;
-    private String gender;
-    private String dsMonHoc;
+    private int gender;
+    private ArrayList<MonHoc> dsMonHoc;
+    private Float avgScore;
 
-    public Student(String ID, String firstName, String middleName, String lastName, myDate dob, String address, String gender, String dsMonHoc) {
+    public Student(int ID, String firstName, String middleName, String lastName, myDate dob, String address, int gender, ArrayList<MonHoc> dsMonHoc, Float avgscore) {
         this.ID = ID;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -20,13 +21,14 @@ public class Student {
         this.address = address;
         this.gender = gender;
         this.dsMonHoc = dsMonHoc;
+        this.avgScore = avgscore;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
-    public void setID(String ID) {
+    public void setID(int ID) {
         this.ID = ID;
     }
 
@@ -70,31 +72,46 @@ public class Student {
         this.address = address;
     }
 
-    public String getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(int gender) {
         this.gender = gender;
     }
 
-    public String getDsMonHoc() {
+    public ArrayList<MonHoc> getDsMonHoc() {
         return dsMonHoc;
     }
 
-    public void setDsMonHoc(String dsMonHoc) {
+    public void setDsMonHoc(ArrayList<MonHoc> dsMonHoc) {
         this.dsMonHoc = dsMonHoc;
     }
 
+    public Float getAvgScore() {
+        return avgScore;
+    }
+
+    public void setAvgScore(Float avgScore) {
+        this.avgScore = avgScore;
+    }
+
+    public String getTenMH(){
+        String tenMH=null;
+        return tenMH;
+    }
+
+
     @Override
     public String toString() {
-        return ID + ','
-                +","+ firstName
-                +","+ middleName
-                +","+ lastName
-                +","+ dob
-                +","+ address
-                +","+ gender
-                +","+ dsMonHoc;
+        return ID + ","
+                + firstName + ","
+                + middleName + ","
+                + lastName + ","
+                + dob + ","
+                + address + ","
+                + gender + ","
+                + dsMonHoc + ","
+                + avgScore;
     }
 }
