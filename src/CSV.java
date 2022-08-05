@@ -2,16 +2,21 @@ import java.io.*;
 import java.util.*;
 
 public class CSV {
-    //public static String header ="ID,FirstName,MiddleName,LastName,DOB,Address,Gender,ListSubject,AvgScore";
-    public static ArrayList<String> studentID = new ArrayList<String>();
-    public static ArrayList<String> student = new ArrayList<>();
+    public static String header ="ID,FirstName,MiddleName,LastName,DOB,Address,Gender,ListSubject,AvgScore";
+    public static ArrayList<String> student = new ArrayList<String>();
+    public static ArrayList<String> studentID= new ArrayList<String>();
+    public static ArrayList<String> lastNameStudent = new ArrayList<String>();
+    public static ArrayList<String> avgStudent = new ArrayList<String>();
+    public static ArrayList<String> DOBstudent = new ArrayList<String>();
+    public static int index=0;
+    public static String[] name = new String[index];
     public CSV() {
 
     }
     private static final String COMMA_DELIMITER = ",";
     //private static final String NEW_LINE_SEPARATOR = "\n";
     private static String fileName = "C:\\Users\\MacBook\\Desktop\\student.csv";
-    public static void readFileStudent(){
+    public static void showStudents(){
         try{
             File file = new File(fileName);
             Reader reader =  new FileReader(file);
@@ -47,7 +52,6 @@ public class CSV {
                         +student.get(7)+","
                         +student.get(8)
         );
-        //System.out.println(student.get(8));
     }
 
     public static void insertStudent() throws IOException{
@@ -123,36 +127,56 @@ public class CSV {
         }
     }
 
-    public static void readFileStudent1(){
+    public static void readFileStudent(){
         try{
             File file = new File(fileName);
             Reader reader =  new FileReader(file);
             BufferedReader br = new BufferedReader(reader);
             String line;
             while ((line =  br.readLine()) != null){
-                parseCsvLine1(line);
+                separateInforStudent(parseCsvLine1(line));
             }
         }catch(IOException e){
             e.printStackTrace();
         }
     }
     public static ArrayList<String> parseCsvLine1(String csvLine){
+        ArrayList<String> inFoStudent = new ArrayList<>();
         if(csvLine != null){
             String[] splitData = csvLine.split(COMMA_DELIMITER);
-            studentID.add(splitData[0]);
             for(int i=0; i < splitData.length; i++){
+                inFoStudent.add(splitData[i]);
                 student.add(splitData[i]);
             }
         }
-        return studentID;
+        return inFoStudent;
+    }
+    public static void separateInforStudent(ArrayList<String> inFoStudent){
+        studentID.add(inFoStudent.get(0));
+        lastNameStudent.add(inFoStudent.get(3));
+        DOBstudent.add(inFoStudent.get(4));
+        avgStudent.add(inFoStudent.get(0)+inFoStudent.get(8));
+
     }
 
-    public static void deleteStudent(int ID){
+    public static void deleteStudent(Integer ID) throws IOException {
         if(findWithID(ID)){
-            readFileStudent1();
-            for(String s: student){
-
+            String temp = "C:\\Users\\MacBook\\Desktop\\temp.csv";
+            File tmpDir = new File(temp);
+            if (!tmpDir.exists() && !tmpDir.isDirectory()){ //checking file availability
+                tmpDir.createNewFile(); //create new file
             }
+            try (FileWriter writer = new FileWriter(temp, true)) //as mentioned if not available then create new file so here always available file
+            {
+                for(String s: studentID){
+                    if(s.equals(ID.toString())){
+                        continue;
+                    }
+//                    String input = ;
+//                    writer.write("\n"+ input);
+                }
+            }
+            System.out.println("DELETE SUCCESS!!");
         }else{
             System.out.println("!!! INVALID STUDENT !!!");
         }
@@ -172,7 +196,6 @@ public class CSV {
         }
     }
     public static boolean findWithID(Integer ID) {
-        readFileStudent1();
         for (String s : studentID) {
             if (s.equals(ID.toString())) {
                 return true;//find student
@@ -180,4 +203,23 @@ public class CSV {
         }
         return false;
     }
+    public static void showArrayInforStudent(){
+        for(String s: student){
+            System.out.println(s);
+        }
+        for(String s: studentID){
+            System.out.println(s);
+        }
+        for (String s: lastNameStudent){
+            System.out.println(s);
+        }
+        for(String s: DOBstudent){
+            System.out.println(s);
+        }
+        for (String s: avgStudent){
+            System.out.println(s);
+        }
+    }// check
+
+
 }

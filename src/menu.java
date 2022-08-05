@@ -25,20 +25,21 @@ public class menu {
         int choice=0;
         int option;
         do{
+            CSV.readFileStudent();
             System.out.print("---Select your choice: ");
             choice = s.nextInt();
             switch(choice){
                 case 1:{
                     System.out.println("\n---HERE IS THE LIST OF STUDENT---");
-                    CSV.readFileStudent();
+                    CSV.showStudents();
                     break;
                 }
                 case 2:{
                     CSV.insertStudent();
                     break;
                 }
-                case 3:{
-                    System.out.println("\tInput ID of student you want delete: ");
+                case 4:{
+                    System.out.print("\tEnter ID of student you want delete: ");
                     int ID = s.nextInt();
                     CSV.deleteStudent(ID);
                     break;
@@ -46,6 +47,7 @@ public class menu {
                 case 5:{
                     System.out.print("-Enter the ID you want to find: ");
                     Integer ID = s.nextInt();
+                    //CSV.showArrayInforStudent();
                     boolean find = CSV.findWithID(ID);
                     if(find==true){
                         System.out.println("THIS STUDENT IS EXIST");
@@ -56,7 +58,7 @@ public class menu {
                 }
             }
 
-            System.out.println("Press key 1 to continue. Press any key to exit: ");
+            System.out.println("PRESS KEY 1 TO CONTINUE. PRESS ANY KEY TO EXIT: ");
             option = s.nextInt();
         }while(option==1);
 
