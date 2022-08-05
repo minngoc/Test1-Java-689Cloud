@@ -8,11 +8,11 @@ public class Student {
     private String firstName, middleName, lastName;
     private myDate dob;
     private String address;
-    private int gender;
+    private String gender;
     private ArrayList<MonHoc> dsMonHoc;
     private Float avgScore;
 
-    public Student(int ID, String firstName, String middleName, String lastName, myDate dob, String address, int gender, ArrayList<MonHoc> dsMonHoc, Float avgscore) {
+    public Student(int ID, String firstName, String middleName, String lastName, myDate dob, String address, String gender, ArrayList<MonHoc> dsMonHoc, Float avgscore) {
         this.ID = ID;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -72,11 +72,11 @@ public class Student {
         this.address = address;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

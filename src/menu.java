@@ -21,7 +21,7 @@ public class menu {
         System.out.println("14.Thống kê số lượng sinh viên theo năm vào học");
     }
 
-    public void selection(){
+    public void selection() throws IOException {
         int choice=0;
         int option;
         do{
@@ -47,7 +47,7 @@ public class menu {
                     System.out.print("-Enter the ID you want to find: ");
                     Integer ID = s.nextInt();
                     boolean find = CSV.findWithID(ID);
-                    if(find==false){
+                    if(find==true){
                         System.out.println("THIS STUDENT IS EXIST");
                     }else{
                         System.out.println("INVALID STUDENT");
