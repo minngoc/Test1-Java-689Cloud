@@ -3,7 +3,9 @@ import java.util.*;
 
 public class CSV {
     public static String header ="ID,FirstName,MiddleName,LastName,DOB,Address,Gender,ListSubject,AvgScore";
+    public static ArrayList<Student> arrStudent = new ArrayList<Student>();
     public static ArrayList<String> student = new ArrayList<String>();
+    public static Student stu = new Student();
     public static ArrayList<String> studentID= new ArrayList<String>();
     public static ArrayList<String> lastNameStudent = new ArrayList<String>();
     public static ArrayList<String> avgStudent = new ArrayList<String>();
@@ -42,6 +44,16 @@ public class CSV {
         return result;
     }
     public static void printStudent(ArrayList<String>student){
+        stu.setID(Integer.parseInt(student.get(0)));
+        stu.setFirstName(student.get(1));
+        stu.setMiddleName(student.get(2));
+        stu.setLastName(student.get(3));
+        stu.setDob(student.get(4));/// how
+        stu.setAddress(student.get(5));
+        stu.setGender(student.get(6).toString());
+        stu.setDsMonHoc(student.get(7));//how
+        stu.setAvgScore(Float.parseFloat(student.get(8)));
+        arrStudent.add(stu);
         System.out.println(student.get(0)+","
                         +student.get(1)+","
                         +student.get(2)+","
