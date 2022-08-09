@@ -1,9 +1,10 @@
+
 import java.io.BufferedReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-
 public class Student {
+
     private int ID;
     private String firstName, middleName, lastName;
     private myDate dob;
@@ -24,8 +25,15 @@ public class Student {
         this.avgScore = avgscore;
     }
 
+    public Student() {
+    }
+
     public int getID() {
         return ID;
+    }
+
+    public String getStringId() {
+        return String.valueOf(ID);
     }
 
     public void setID(int ID) {
@@ -91,16 +99,18 @@ public class Student {
     public Float getAvgScore() {
         return avgScore;
     }
+    public String getStrAvgScore(){
+        return String.valueOf(avgScore);
+    }
 
     public void setAvgScore(Float avgScore) {
         this.avgScore = avgScore;
     }
 
-    public String getTenMH(){
-        String tenMH=null;
+    public String getTenMH() {
+        String tenMH = null;
         return tenMH;
     }
-
 
     @Override
     public String toString() {

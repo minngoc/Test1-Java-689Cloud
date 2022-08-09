@@ -1,9 +1,12 @@
+
 import java.io.*;
 import java.util.Scanner;
 
 public class menu {
+
     Scanner s = new Scanner(System.in);
-    public void Menu(){
+
+    public void Menu() {
         System.out.println("------MENU------");
         System.out.println("1.Xem sinh viên");
         System.out.println("2.Thêm Sinh viên");
@@ -22,36 +25,36 @@ public class menu {
     }
 
     public void selection() throws IOException {
-        int choice=0;
+        int choice = 0;
         int option;
-        do{
-            CSV.readFileStudent();
+        do {
+            CSV csv = new CSV();
             System.out.print("---Select your choice: ");
             choice = s.nextInt();
-            switch(choice){
-                case 1:{
+            switch (choice) {
+                case 1: {
                     System.out.println("\n---HERE IS THE LIST OF STUDENT---");
-                    CSV.showStudents();
+                    csv.showStudents();
                     break;
                 }
-                case 2:{
-                    CSV.insertStudent();
+                case 2: {
+                    csv.insertStudent();
                     break;
                 }
-                case 4:{
+                case 4: {
                     System.out.print("\tEnter ID of student you want delete: ");
                     int ID = s.nextInt();
-                    CSV.deleteStudent(ID);
+                    csv.deleteStudent(ID);
                     break;
                 }
-                case 5:{
+                case 5: {
                     System.out.print("-Enter the ID you want to find: ");
                     Integer ID = s.nextInt();
                     //CSV.showArrayInforStudent();
-                    boolean find = CSV.findWithID(ID);
-                    if(find==true){
+                    boolean find = csv.findWithID(ID);
+                    if (find == true) {
                         System.out.println("THIS STUDENT IS EXIST");
-                    }else{
+                    } else {
                         System.out.println("INVALID STUDENT");
                     }
                     break;
@@ -60,7 +63,7 @@ public class menu {
 
             System.out.println("PRESS KEY 1 TO CONTINUE. PRESS ANY KEY TO EXIT: ");
             option = s.nextInt();
-        }while(option==1);
+        } while (option==1);
 
         System.out.println("END PROGRAM! SEE YOU AGAIN!");
     }

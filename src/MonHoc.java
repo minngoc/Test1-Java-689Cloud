@@ -1,13 +1,16 @@
+
 import java.util.Scanner;
 
 public class MonHoc {
+
     private String maMH;
     private String tenMH;
     private Float diem;
 
-    public MonHoc(){
+    public MonHoc() {
 
     }
+
     public MonHoc(String maMH, String tenMH, Float diem) {
         this.maMH = maMH;
         this.tenMH = tenMH;
@@ -37,7 +40,12 @@ public class MonHoc {
     public void setDiem(Float diem) {
         this.diem = diem;
     }
-    public void inputSubject(){
+
+    public String getStringDiem() {
+        return String.valueOf(this.diem);
+    }
+
+    public void inputSubject() {
         Scanner s = new Scanner(System.in);
         System.out.println("\t.Input Mã môn học: ");
         this.maMH = s.nextLine();
@@ -45,5 +53,10 @@ public class MonHoc {
         this.tenMH = s.nextLine();
         System.out.println("\t.Input Score: ");
         this.diem = s.nextFloat();
+    }
+
+    @Override
+    public String toString() {
+        return maMH + ',' + tenMH + ',' + diem;
     }
 }
