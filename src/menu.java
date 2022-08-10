@@ -27,8 +27,9 @@ public class menu {
     public void selection() throws IOException {
         int choice = 0;
         int option;
+        CSV csv = new CSV();
+        csv.readFileStudent();
         do {
-            CSV csv = new CSV();
             System.out.print("---Select your choice: ");
             choice = s.nextInt();
             switch (choice) {
@@ -51,12 +52,17 @@ public class menu {
                     System.out.print("-Enter the ID you want to find: ");
                     Integer ID = s.nextInt();
                     //CSV.showArrayInforStudent();
-                    boolean find = csv.findWithID(ID);
-                    if (find == true) {
-                        System.out.println("THIS STUDENT IS EXIST");
+                    //boolean find = csv.findWithID(ID);
+                    if (csv.findWithID(ID)!=null) {
+                        csv.rankedAcademic(ID);
+                        //System.out.println("THIS STUDENT IS EXIST");
                     } else {
                         System.out.println("INVALID STUDENT");
                     }
+                    break;
+                }
+                case 13:{
+                    csv.findNameAn();
                     break;
                 }
             }

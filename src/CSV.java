@@ -1,6 +1,7 @@
 
 import java.io.*;
 import java.util.*;
+import java.util.Objects;
 
 public class CSV {
 
@@ -11,6 +12,7 @@ public class CSV {
     public ArrayList<String> lastNameStudent = new ArrayList<String>();
     public ArrayList<String> avgStudent = new ArrayList<String>();
     public ArrayList<String> DOBstudent = new ArrayList<String>();
+    private boolean alreadyExecuted = false;
     public int index = 0;
     public String[] name = new String[index];
 
@@ -122,22 +124,17 @@ public class CSV {
             tenmon=tenmon.concat(mon.getTenMH() + " ");
             diem=diem.concat(mon.getStringDiem() + " ");
         }
-        //System.out.println(mamon+","+tenmon+","+diem);
-//        mh.forEach((sub) -> {
-//            System.out.println(sub);
-//            mamon.concat(sub.getMaMH() + " ");
-//            //System.out.println(mamon);
-//            tenmon.concat(sub.getTenMH() + " ");
-//            diem.concat(sub.getStringDiem() + " ");
-//        });
         output=output.concat(mamon + "," + tenmon + "," + diem);
         return output;
     }
 
     public String printArrStu() {
-        readFileStudent();
-        System.out.println(header);
+        if(!alreadyExecuted){
+            readFileStudent();
+            alreadyExecuted = true;
+        }
         String input = "";
+        input = input.concat(header+"\n");
         for(Student stu:arrStudent){
             String student = stu.getStringId() + COMMA_DELIMITER +
                     stu.getFirstName() + COMMA_DELIMITER +
@@ -150,20 +147,8 @@ public class CSV {
                     stu.getStrAvgScore();
             input=input.concat(student + "\n");
         }
-//        arrStudent.forEach((stu) -> {
-//            //System.out.println(stu.getDsMonHoc());
-//            String student = stu.getStringId() + COMMA_DELIMITER +
-//                            stu.getFirstName() + COMMA_DELIMITER +
-//                            stu.getMiddleName() + COMMA_DELIMITER +
-//                            stu.getLastName() + COMMA_DELIMITER +
-//                            stu.getDob().toString() + COMMA_DELIMITER +
-//                            stu.getAddress() + COMMA_DELIMITER +
-//                            stu.getGender() + COMMA_DELIMITER +
-//                            handleSubject(stu.getDsMonHoc()) + COMMA_DELIMITER +
-//                            stu.getStrAvgScore();
-//            input=input.concat(student + "\n");
-//        });
-        //System.out.println(input);
+        System.out.println("Here is input:");
+        System.out.println(input);
         return input;
     }
 
@@ -199,55 +184,39 @@ public class CSV {
         int numSub = s.nextInt();
         int numofSub = numSub;
         ArrayList<MonHoc> listSubject = new ArrayList<MonHoc>();
-        ArrayList<String> tenMH = new ArrayList<String>();
-        MonHoc mh = new MonHoc();
         Float totalScore = (float) 0;
         do {
+            MonHoc mh = new MonHoc();
             mh.inputSubject();
             listSubject.add(mh);
-            tenMH.add(mh.getTenMH());
             totalScore += mh.getDiem();
             numSub--;
         } while (numSub > 0);
         float avgScore = Math.round(((totalScore / numofSub) * 10) / 10);//avgScore = total / number of subject
-        if (!findWithID(ID)) { // this ID does not exist --> add
+        Student tempstu = findWithID(ID);
+        if (Objects.isNull(tempstu)) { // this ID does not exist --> add
             Student Stu = new Student(ID, firstName, middleName, lastName, day, adress, gender, listSubject, avgScore);
             arrStudent.add(Stu);
-            writeFileStudent(Stu, tenMH);
+            writeFileStudent();
             System.out.println(Stu);
             System.out.println("INSERT STUDENT SUCCESS!!");
-
         } else {
             System.out.println("ERROR !!! THIS STUDENT IS EXISTED !!!");
         }
 
     }
 
-    public void writeFileStudent(Student s, ArrayList<String> tenMH) throws IOException {
+    public void writeFileStudent() throws IOException {
 
         File tmpDir = new File(FILE_ADDRESS);
         if (!tmpDir.exists() && !tmpDir.isDirectory()) { //checking file availability
             tmpDir.createNewFile(); //create new file
         }
-        try ( FileWriter writer = new FileWriter(FILE_ADDRESS, true) //as mentioned if not available then create new file so here always available file
+        try ( FileWriter writer = new FileWriter(FILE_ADDRESS, false) //as mentioned if not available then create new file so here always available file
         ) {
-            String input, subj = "";
 
-            for (String mh : tenMH) {
-                subj = subj + " " + mh;
-            }
-
-            input = s.getID() + ","
-                    + s.getFirstName() + ","
-                    + s.getMiddleName() + ","
-                    + s.getLastName() + ","
-                    + s.getDob() + ","
-                    + s.getAddress() + ","
-                    + s.getGender() + ","
-                    + subj + ","
-                    + s.getAvgScore() + "\n";
-
-            writer.write("\n" + input); //writing continue to the existed file
+            String input = printArrStu();
+            writer.write(input); //writing continue to the existed file
 
         }
     }
@@ -273,7 +242,7 @@ public class CSV {
     }
 
     public void deleteStudent(Integer ID) throws IOException {
-        if (findWithID(ID)) {
+        if (findWithID(ID)!=null) {
             String temp = FILE_ADDRESS;
             File tmpDir = new File(temp);
             if (!tmpDir.exists() && !tmpDir.isDirectory()) { //checking file availability
@@ -295,27 +264,44 @@ public class CSV {
         }
     }
 
-    public void rankedAcademic(Float avgScore) {
-        if (avgScore > 8) {
-            System.out.println("Very good");
-        } else if (avgScore > 6.5 && avgScore <= 8) {
-            System.out.println("Good");
-        } else if (avgScore <= 6.5 && avgScore > 5) {
-            System.out.println("Pass");
-        } else if (avgScore > 3 && avgScore <= 5) {
-            System.out.println("Weak");
-        } else {
-            System.out.println("Poor");
+    public void rankedAcademic(Integer ID) {
+        Student stu = findWithID(ID);
+        if(stu != null) {
+            System.out.println(header);
+            String data = stu.getStringId() + COMMA_DELIMITER +
+                    stu.getFirstName() + COMMA_DELIMITER +
+                    stu.getMiddleName() + COMMA_DELIMITER +
+                    stu.getLastName() + COMMA_DELIMITER +
+                    stu.getDob().toString() + COMMA_DELIMITER +
+                    stu.getAddress() + COMMA_DELIMITER +
+                    stu.getGender() + COMMA_DELIMITER +
+                    handleSubject(stu.getDsMonHoc()) + COMMA_DELIMITER +
+                    stu.getStrAvgScore();
+            System.out.println(data);
+            if (stu.getAvgScore() > 8) {
+                System.out.println("Very good");
+            } else if (stu.getAvgScore() > 6.5 && stu.getAvgScore() <= 8) {
+                System.out.println("Good");
+            } else if (stu.getAvgScore() <= 6.5 && stu.getAvgScore() > 5) {
+                System.out.println("Pass");
+            } else if (stu.getAvgScore() > 3 && stu.getAvgScore() <= 5) {
+                System.out.println("Weak");
+            } else {
+                System.out.println("Poor");
+            }
+        }else{
+            System.out.println("Can not find ID student, please try again!");
         }
     }
 
-    public boolean findWithID(Integer ID) {
-        for (String s : studentID) {
-            if (s.equals(ID.toString())) {
-                return true;//find student
+    public Student findWithID(Integer ID) {
+        for (Student s : arrStudent) {
+            if (s.getID()==ID) {
+                System.out.println(s.getID());
+                return s;//find student success
             }
         }
-        return false;
+        return null;
     }
 
     public void showArrayInforStudent() {
@@ -336,4 +322,27 @@ public class CSV {
         }
     }// check
 
+    public void findNameAn() {
+        String name = "An";
+        System.out.println(header);
+        boolean flag = false;
+        for(Student stu: arrStudent){
+            if (stu.getLastName().equals(name)){
+                String data = stu.getStringId() + COMMA_DELIMITER +
+                        stu.getFirstName() + COMMA_DELIMITER +
+                        stu.getMiddleName() + COMMA_DELIMITER +
+                        stu.getLastName() + COMMA_DELIMITER +
+                        stu.getDob().toString() + COMMA_DELIMITER +
+                        stu.getAddress() + COMMA_DELIMITER +
+                        stu.getGender() + COMMA_DELIMITER +
+                        handleSubject(stu.getDsMonHoc()) + COMMA_DELIMITER +
+                        stu.getStrAvgScore();
+                System.out.println(data);
+                flag = true;
+            }
+        }
+        if(!flag){
+            System.out.println("There are no body name An in list student");
+        }
+    }
 }
