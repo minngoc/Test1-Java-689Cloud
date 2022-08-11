@@ -8,7 +8,8 @@ public class main {
             m.Menu();
             m.selection();
         } catch (Exception e) {
-
+            System.out.println("\nEND PROGRAM! SEE YOU AGAIN!");
+            e.printStackTrace();
         }
 
     }

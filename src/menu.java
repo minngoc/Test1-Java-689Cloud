@@ -8,19 +8,19 @@ public class menu {
 
     public void Menu() {
         System.out.println("------MENU------");
-        System.out.println("1.Xem sinh viên");
-        System.out.println("2.Thêm Sinh viên");
+        System.out.println("1.Xem sinh viên"); //done
+        System.out.println("2.Thêm Sinh viên"); //done
         System.out.println("3.Cập nhật thông tin sinh viên");
-        System.out.println("4.Xóa sinh viên");
-        System.out.println("5.Tìm sinh viên bằng ID");
+        System.out.println("4.Xóa sinh viên"); //done
+        System.out.println("5.Tìm sinh viên bằng ID"); //done
         System.out.println("6.In theo hạng từ lớn tới nhỏ");
         System.out.println("7.Người đứng đầu -  Nguời đứng cuối");
-        System.out.println("8.Số sinh viên giỏi, khá, trung bình, yếu, kém");
-        System.out.println("9.Xem tỉ lệ % giỏi, khá trung bình, yếu kém");
+        System.out.println("8.Số sinh viên giỏi, khá, trung bình, yếu, kém"); //done
+        System.out.println("9.Xem tỉ lệ % giỏi, khá trung bình, yếu kém"); //done
         System.out.println("10.In tên danh sách sinh viên theo bảng chữ cái từ A - Z");
-        System.out.println("11.Cho biết có bao nhiêu Sinh viên trùng tên với nhau và Tên gì");
+        System.out.println("11.Cho biết có bao nhiêu Sinh viên trùng tên với nhau và Tên gì"); //almost done
         System.out.println("12.Cho biết có bao nhiêu Sinh viên có cùng tháng sinh và đó là những ai");
-        System.out.println("13.Tìm kiếm những sinh viên có Tên là An");
+        System.out.println("13.Tìm kiếm những sinh viên có Tên là An"); //done
         System.out.println("14.Thống kê số lượng sinh viên theo năm vào học");
     }
 
@@ -42,23 +42,41 @@ public class menu {
                     csv.insertStudent();
                     break;
                 }
+                case 3:{
+                    System.out.print("-Enter the ID of student you want to update: ");
+                    Integer ID = s.nextInt();
+                    csv.updateStudent(ID);
+                    break;
+                }
                 case 4: {
                     System.out.print("\tEnter ID of student you want delete: ");
                     int ID = s.nextInt();
                     csv.deleteStudent(ID);
-                    break;
                 }
                 case 5: {
                     System.out.print("-Enter the ID you want to find: ");
                     Integer ID = s.nextInt();
-                    //CSV.showArrayInforStudent();
-                    //boolean find = csv.findWithID(ID);
                     if (csv.findWithID(ID)!=null) {
                         csv.rankedAcademic(ID);
-                        //System.out.println("THIS STUDENT IS EXIST");
                     } else {
                         System.out.println("INVALID STUDENT");
                     }
+                    break;
+                }
+                case 6:{
+                    csv.sortByRank();
+                    break;
+                }
+                case 8:{
+                    csv.countRankedAcademic();
+                    break;
+                }
+                case 9:{
+                    csv.percentRankedAcademic();
+                    break;
+                }
+                case 11:{
+                    csv.findSameName();
                     break;
                 }
                 case 13:{
@@ -67,11 +85,11 @@ public class menu {
                 }
             }
 
-            System.out.println("PRESS KEY 1 TO CONTINUE. PRESS ANY KEY TO EXIT: ");
+            System.out.println("\nPRESS KEY 1 TO CONTINUE. PRESS ANY KEY TO EXIT: ");
             option = s.nextInt();
         } while (option==1);
 
-        System.out.println("END PROGRAM! SEE YOU AGAIN!");
+        System.out.println("\nEND PROGRAM! SEE YOU AGAIN!");
     }
 
 }

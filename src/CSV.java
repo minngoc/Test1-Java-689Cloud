@@ -1,29 +1,22 @@
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.*;
-import java.util.Objects;
+import java.util.Collections;
 
 public class CSV {
 
     public String header = "ID,FirstName,MiddleName,LastName,DOB,Address,Gender,KeySubject,ListSubject,ListScore,AvgScore";
-    public ArrayList<Student> arrStudent = new ArrayList<Student>();
-    public ArrayList<String> student = new ArrayList<String>();
-    public ArrayList<String> studentID = new ArrayList<String>();
-    public ArrayList<String> lastNameStudent = new ArrayList<String>();
-    public ArrayList<String> avgStudent = new ArrayList<String>();
-    public ArrayList<String> DOBstudent = new ArrayList<String>();
+    public ArrayList<Student> arrStudent = new ArrayList<>();
     private boolean alreadyExecuted = false;
-    public int index = 0;
-    public String[] name = new String[index];
+    private final String COMMA_DELIMITER = ",";
+    //private final String SPACE_DELIMITER = " ";
+    //private final String NEW_LINE_SEPARATOR = "\n";
+    private String FILE_ADDRESS = "C:\\Users\\Admin\\Desktop\\student.csv";
 
     public CSV() {
 
     }
-    private final String COMMA_DELIMITER = ",";
-    private final String SPACE_DELIMITER = " ";
-    //private final String NEW_LINE_SEPARATOR = "\n";
-    private String FILE_ADDRESS = "C:\\Users\\Admin\\Desktop\\student.csv";
-
     public void readFileStudent() {
         try {
             File file = new File(FILE_ADDRESS);
@@ -39,7 +32,7 @@ public class CSV {
     }
 
     public ArrayList<String> parseCsvLine(String csvLine) {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
         if (csvLine != null) {
             String[] splitData = csvLine.split(COMMA_DELIMITER);
             for (int i = 0; i < splitData.length; i++) {
@@ -67,10 +60,10 @@ public class CSV {
     }
 
     public ArrayList<MonHoc> getMonHoc(String mamon, String tenmon, String diem) {
-        ArrayList<MonHoc> arrMonHoc = new ArrayList<MonHoc>();
-        String eachMaMon[] = mamon.split(SPACE_DELIMITER);
-        String eachTenMon[] = tenmon.split(SPACE_DELIMITER);
-        String eachStringDiem[] = diem.split(SPACE_DELIMITER);
+        ArrayList<MonHoc> arrMonHoc = new ArrayList<>();
+        String eachMaMon[] = mamon.split(" ");
+        String eachTenMon[] = tenmon.split(" ");
+        String eachStringDiem[] = diem.split(" ");
         Float[] eachFloatDiem = Arrays.stream(eachStringDiem).map(Float::valueOf).toArray(Float[]::new);
         //conver string array to float array
         for (int i = 0; i < eachMaMon.length; i++) {
@@ -127,7 +120,6 @@ public class CSV {
         output=output.concat(mamon + "," + tenmon + "," + diem);
         return output;
     }
-
     public String printArrStu() {
         if(!alreadyExecuted){
             readFileStudent();
@@ -147,11 +139,8 @@ public class CSV {
                     stu.getStrAvgScore();
             input=input.concat(student + "\n");
         }
-        System.out.println("Here is input:");
-        System.out.println(input);
         return input;
     }
-
     public void insertStudent() throws IOException {
         Scanner s = new Scanner(System.in);
         System.out.println("- Input ID: ");
@@ -194,18 +183,18 @@ public class CSV {
         } while (numSub > 0);
         float avgScore = Math.round(((totalScore / numofSub) * 10) / 10);//avgScore = total / number of subject
         Student tempstu = findWithID(ID);
-        if (Objects.isNull(tempstu)) { // this ID does not exist --> add
+        if (tempstu==null) { // this ID does not exist --> add
             Student Stu = new Student(ID, firstName, middleName, lastName, day, adress, gender, listSubject, avgScore);
             arrStudent.add(Stu);
             writeFileStudent();
             System.out.println(Stu);
             System.out.println("INSERT STUDENT SUCCESS!!");
+            showStudents();
         } else {
             System.out.println("ERROR !!! THIS STUDENT IS EXISTED !!!");
         }
 
     }
-
     public void writeFileStudent() throws IOException {
 
         File tmpDir = new File(FILE_ADDRESS);
@@ -220,47 +209,42 @@ public class CSV {
 
         }
     }
-
-    public ArrayList<String> parseCsvLine1(String csvLine) {
-        ArrayList<String> inFoStudent = new ArrayList<>();
-        if (csvLine != null) {
-            String[] splitData = csvLine.split(COMMA_DELIMITER);
-            for (int i = 0; i < splitData.length; i++) {
-                inFoStudent.add(splitData[i]);
-                student.add(splitData[i]);
-            }
-        }
-        return inFoStudent;
-    }
-
-    public void separateInforStudent(ArrayList<String> inFoStudent) {
-        studentID.add(inFoStudent.get(0));
-        lastNameStudent.add(inFoStudent.get(3));
-        DOBstudent.add(inFoStudent.get(4));
-        avgStudent.add(inFoStudent.get(0) + inFoStudent.get(8));
-
-    }
-
-    public void deleteStudent(Integer ID) throws IOException {
-        if (findWithID(ID)!=null) {
-            String temp = FILE_ADDRESS;
-            File tmpDir = new File(temp);
-            if (!tmpDir.exists() && !tmpDir.isDirectory()) { //checking file availability
-                tmpDir.createNewFile(); //create new file
-            }
-            try ( FileWriter writer = new FileWriter(temp, true)) //as mentioned if not available then create new file so here always available file
-            {
-                for (String s : studentID) {
-                    if (s.equals(ID.toString())) {
-                        continue;
-                    }
-//                    String input = ;
-//                    writer.write("\n"+ input);
+    public void updateStudent(Integer ID){
+        if(findWithID(ID)==null){
+            System.out.println("INVALID STUDENT!!!!");
+        }else{
+            Scanner s = new Scanner(System.in);
+            int option;
+            int selection = -1;
+            System.out.println("\t1)First name\n" +
+                                "\t2)Middle name\n" +
+                                "\t3)Last name\n" +
+                                "\t4)Day of birth\n" +
+                                "\t5)Address\n" +
+                                "\t6)Gender\n" +
+                                "\t7)KeySubject\n" +
+                                "\t8)ListSubject\n" +
+                                "\t9)AvgScore\n");
+            do{
+                System.out.print("--Select the option you want to change: ");
+                option = s.nextInt();
+            }while (option<1&&option>9);
+            switch (selection){
+                case 1:{
+                    String firstName = s.nextLine();
+                    break;
                 }
             }
+        }
+    }
+    public void deleteStudent(Integer ID) throws IOException {
+        Student s = findWithID(ID);
+        if(s!=null){
+            arrStudent.remove(s);
+            writeFileStudent();
             System.out.println("DELETE SUCCESS!!");
-        } else {
-            System.out.println("!!! INVALID STUDENT !!!");
+        }else {
+            System.out.println("\n!!!INVALID STUDENT, CAN NOT DELETE!!!");
         }
     }
 
@@ -297,30 +281,12 @@ public class CSV {
     public Student findWithID(Integer ID) {
         for (Student s : arrStudent) {
             if (s.getID()==ID) {
-                System.out.println(s.getID());
+                //System.out.println(s.getID());
                 return s;//find student success
             }
         }
         return null;
     }
-
-    public void showArrayInforStudent() {
-        for (String s : student) {
-            System.out.println(s);
-        }
-        for (String s : studentID) {
-            System.out.println(s);
-        }
-        for (String s : lastNameStudent) {
-            System.out.println(s);
-        }
-        for (String s : DOBstudent) {
-            System.out.println(s);
-        }
-        for (String s : avgStudent) {
-            System.out.println(s);
-        }
-    }// check
 
     public void findNameAn() {
         String name = "An";
@@ -345,4 +311,130 @@ public class CSV {
             System.out.println("There are no body name An in list student");
         }
     }
+    private void mySwap(Student s, Student s1) {
+        Student temp = new Student();
+        temp = s;
+        s = s1;
+        s1 = temp;
+    }
+    public void sortByRank() {
+        ArrayList<Student> temp = new ArrayList<Student>();
+        temp=arrStudent;
+        int i=0;
+        for(Student s: temp){
+            int j=0;
+            for(Student s1: temp){
+                if(s.getAvgScore()>s1.getAvgScore()){
+                    Collections.swap(temp,i,j);
+                    System.out.println(s1);
+                }
+                j++;
+            }
+            i++;
+        }
+        System.out.println("AFTER SORT");
+        for(Student stu: temp){
+            String data = stu.getStringId() + COMMA_DELIMITER +
+                    stu.getFirstName() + COMMA_DELIMITER +
+                    stu.getMiddleName() + COMMA_DELIMITER +
+                    stu.getLastName() + COMMA_DELIMITER +
+                    stu.getDob().toString() + COMMA_DELIMITER +
+                    stu.getAddress() + COMMA_DELIMITER +
+                    stu.getGender() + COMMA_DELIMITER +
+                    handleSubject(stu.getDsMonHoc()) + COMMA_DELIMITER +
+                    stu.getStrAvgScore();
+            System.out.println(data);
+        }
+    }
+    public void countRankedAcademic() {
+        ArrayList<Float> avgStudent = new ArrayList<Float>();
+        for(Student stu: arrStudent){
+            avgStudent.add(stu.getAvgScore());
+        }
+        Integer countGioi=0, countKha=0, countTB=0, countYeu=0, countKem=0;
+        for( Float score : avgStudent){
+            if (score > 8) {
+                countGioi++;
+            } else if (score> 6.5 && score<= 8) {
+                countKha++;
+            } else if (score<= 6.5 && score> 5) {
+                countTB++;
+            } else if (score > 3 && score<= 5) {
+                countYeu++;
+            } else {
+                countKem++;
+            }
+        }
+        System.out.println("Number of VERY GOOD students :"+countGioi);
+        System.out.println("Number of GOOD students :"+countKha);
+        System.out.println("Number of PASS students :"+countTB);
+        System.out.println("Number of WEAK students :"+countYeu);
+        System.out.println("Number of POOR students :"+countKem);
+    }
+    public void percentRankedAcademic() {
+        DecimalFormat df= new DecimalFormat("0.00");
+        ArrayList<Float> avgStudent = new ArrayList<Float>();
+        for(Student stu: arrStudent){
+            avgStudent.add(stu.getAvgScore());
+        }
+        Float countGioi=(float)0, countKha=(float)0, countTB=(float)0, countYeu=(float)0, countKem=(float)0;
+
+        for( Float score : avgStudent){
+            if (score > 8) {
+                countGioi++;
+            } else if (score> 6.5 && score<= 8) {
+                countKha++;
+            } else if (score<= 6.5 && score> 5) {
+                countTB++;
+            } else if (score > 3 && score<= 5) {
+                countYeu++;
+            } else {
+                countKem++;
+            }
+        }
+        Float percentGioi= Float.valueOf(df.format((countGioi*100/avgStudent.size())));
+        Float percentKha= Float.valueOf(df.format((countKha*100/avgStudent.size())));
+        Float percentTB= Float.valueOf(df.format((countTB*100/avgStudent.size())));
+        Float percentYeu= Float.valueOf(df.format((countYeu*100/avgStudent.size())));
+        Float percentKem= Float.valueOf(df.format((countKem*100/avgStudent.size())));
+
+        System.out.println("Percent of VERY GOOD students :"+percentGioi +"%");
+        System.out.println("Percent of GOOD students :"+percentKha +"%");
+        System.out.println("Percent of PASS students :"+percentTB +"%");
+        System.out.println("Percent of WEAK students :"+percentYeu +"%");
+        System.out.println("Percent of POOR students :"+percentKem +"%");
+    }
+    private Integer countName(ArrayList<String> lastNameStudent, String name) {
+        Integer count=0;
+        for (String tempName:lastNameStudent){
+            if(name.equals(tempName)){
+                count++;
+            }
+        }
+        return count;
+    }
+    public void findSameName() {
+        ArrayList<String> lastNameStudent = new ArrayList<>();
+        for(Student stu: arrStudent){
+            lastNameStudent.add(stu.getLastName());
+        }
+        for(String name:lastNameStudent){
+            if(countName(lastNameStudent,name)>1){
+                lastNameStudent.remove(name);
+            }
+        }
+        for(String name: lastNameStudent){
+            System.out.println("-"+ name+ ": "+countName(lastNameStudent,name));
+        }
+    }
+    public void findSameMonth(){
+        ArrayList<Integer> arrMonth = new ArrayList<Integer>();
+        for( Student stu: arrStudent){
+            arrMonth.add(stu.getDob().getMonth());
+        }
+        for(Integer month:arrMonth){
+
+        }
+    }
+
 }
