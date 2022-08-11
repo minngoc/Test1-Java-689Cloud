@@ -3,6 +3,7 @@ import java.io.*;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class CSV {
 
@@ -320,18 +321,7 @@ public class CSV {
     public void sortByRank() {
         ArrayList<Student> temp = new ArrayList<Student>();
         temp=arrStudent;
-        int i=0;
-        for(Student s: temp){
-            int j=0;
-            for(Student s1: temp){
-                if(s.getAvgScore()>s1.getAvgScore()){
-                    Collections.swap(temp,i,j);
-                    System.out.println(s1);
-                }
-                j++;
-            }
-            i++;
-        }
+        Collections.sort(temp, Student.StuAvgScoreComparator);
         System.out.println("AFTER SORT");
         for(Student stu: temp){
             String data = stu.getStringId() + COMMA_DELIMITER +
@@ -411,17 +401,13 @@ public class CSV {
                 count++;
             }
         }
+        //lastNameStudent.remove(name);
         return count;
     }
     public void findSameName() {
         ArrayList<String> lastNameStudent = new ArrayList<>();
         for(Student stu: arrStudent){
             lastNameStudent.add(stu.getLastName());
-        }
-        for(String name:lastNameStudent){
-            if(countName(lastNameStudent,name)>1){
-                lastNameStudent.remove(name);
-            }
         }
         for(String name: lastNameStudent){
             System.out.println("-"+ name+ ": "+countName(lastNameStudent,name));
@@ -437,4 +423,44 @@ public class CSV {
         }
     }
 
+    public void sortByName() {
+        ArrayList<Student> temp = new ArrayList<Student>();
+        temp=arrStudent;
+        Collections.sort(temp, Student.StuNameComparator);
+        System.out.println("AFTER SORT BY LASTNAME");
+        for(Student stu: temp){
+            String data = stu.getStringId() + COMMA_DELIMITER +
+                    stu.getFirstName() + COMMA_DELIMITER +
+                    stu.getMiddleName() + COMMA_DELIMITER +
+                    stu.getLastName() + COMMA_DELIMITER +
+                    stu.getDob().toString() + COMMA_DELIMITER +
+                    stu.getAddress() + COMMA_DELIMITER +
+                    stu.getGender() + COMMA_DELIMITER +
+                    handleSubject(stu.getDsMonHoc()) + COMMA_DELIMITER +
+                    stu.getStrAvgScore();
+            System.out.println(data);
+        }
+    }
+
+    public void showTopAndlastStudent() {
+        ArrayList<Student> temp = new ArrayList<Student>();
+        ArrayList<Student> firstandlast = new ArrayList<Student>();
+        temp=arrStudent;
+        Collections.sort(temp, Student.StuAvgScoreComparator);
+        firstandlast.add(temp.get(0));
+        firstandlast.add(temp.get(temp.size()-1));
+        System.out.println("AFTER SORT");
+        for(Student stu: firstandlast){
+            String data = stu.getStringId() + COMMA_DELIMITER +
+                    stu.getFirstName() + COMMA_DELIMITER +
+                    stu.getMiddleName() + COMMA_DELIMITER +
+                    stu.getLastName() + COMMA_DELIMITER +
+                    stu.getDob().toString() + COMMA_DELIMITER +
+                    stu.getAddress() + COMMA_DELIMITER +
+                    stu.getGender() + COMMA_DELIMITER +
+                    handleSubject(stu.getDsMonHoc()) + COMMA_DELIMITER +
+                    stu.getStrAvgScore();
+            System.out.println(data);
+        }
+    }
 }

@@ -13,12 +13,12 @@ public class menu {
         System.out.println("3.Cập nhật thông tin sinh viên");
         System.out.println("4.Xóa sinh viên"); //done
         System.out.println("5.Tìm sinh viên bằng ID"); //done
-        System.out.println("6.In theo hạng từ lớn tới nhỏ");
-        System.out.println("7.Người đứng đầu -  Nguời đứng cuối");
+        System.out.println("6.In theo hạng từ lớn tới nhỏ");//done
+        System.out.println("7.Người đứng đầu -  Nguời đứng cuối");//done
         System.out.println("8.Số sinh viên giỏi, khá, trung bình, yếu, kém"); //done
         System.out.println("9.Xem tỉ lệ % giỏi, khá trung bình, yếu kém"); //done
-        System.out.println("10.In tên danh sách sinh viên theo bảng chữ cái từ A - Z");
-        System.out.println("11.Cho biết có bao nhiêu Sinh viên trùng tên với nhau và Tên gì"); //almost done
+        System.out.println("10.In tên danh sách sinh viên theo bảng chữ cái từ A - Z");//done
+        System.out.println("11.Cho biết có bao nhiêu Sinh viên trùng tên với nhau và Tên gì");
         System.out.println("12.Cho biết có bao nhiêu Sinh viên có cùng tháng sinh và đó là những ai");
         System.out.println("13.Tìm kiếm những sinh viên có Tên là An"); //done
         System.out.println("14.Thống kê số lượng sinh viên theo năm vào học");
@@ -67,12 +67,20 @@ public class menu {
                     csv.sortByRank();
                     break;
                 }
+                case 7:{
+                    csv.showTopAndlastStudent();
+                    break;
+                }
                 case 8:{
                     csv.countRankedAcademic();
                     break;
                 }
                 case 9:{
                     csv.percentRankedAcademic();
+                    break;
+                }
+                case 10:{
+                    csv.sortByName();
                     break;
                 }
                 case 11:{

@@ -2,8 +2,10 @@
 import java.io.BufferedReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.*;
+import java.util.Comparator;
 
-public class Student {
+public class Student{
 
     private int ID;
     private String firstName, middleName, lastName;
@@ -111,6 +113,41 @@ public class Student {
         String tenMH = null;
         return tenMH;
     }
+
+    public static Comparator<Student> StuAvgScoreComparator = new Comparator<Student>() {
+
+
+        public int compare(Student s1, Student s2) {
+            String StudentName1
+                    = s1.getStrAvgScore().toUpperCase();
+            String StudentName2
+                    = s2.getStrAvgScore().toUpperCase();
+
+
+            return StudentName2.compareTo(
+                    StudentName1);
+
+
+        }
+    };
+
+    public static Comparator<Student> StuNameComparator = new Comparator<Student>() {
+
+
+        public int compare(Student s1, Student s2) {
+            String StudentName1
+                    = s1.getLastName().toUpperCase();
+            String StudentName2
+                    = s2.getLastName().toUpperCase();
+
+
+            return StudentName1.compareTo(
+                    StudentName2);
+
+
+        }
+    };
+
 
     @Override
     public String toString() {
