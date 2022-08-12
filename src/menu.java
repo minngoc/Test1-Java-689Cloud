@@ -18,10 +18,10 @@ public class menu {
         System.out.println("8.Số sinh viên giỏi, khá, trung bình, yếu, kém"); //done
         System.out.println("9.Xem tỉ lệ % giỏi, khá trung bình, yếu kém"); //done
         System.out.println("10.In tên danh sách sinh viên theo bảng chữ cái từ A - Z");//done
-        System.out.println("11.Cho biết có bao nhiêu Sinh viên trùng tên với nhau và Tên gì");
-        System.out.println("12.Cho biết có bao nhiêu Sinh viên có cùng tháng sinh và đó là những ai");
+        System.out.println("11.Cho biết có bao nhiêu Sinh viên trùng tên với nhau và Tên gì");//done
+        System.out.println("12.Cho biết có bao nhiêu Sinh viên có cùng tháng sinh và đó là những ai");//done
         System.out.println("13.Tìm kiếm những sinh viên có Tên là An"); //done
-        System.out.println("14.Thống kê số lượng sinh viên theo năm vào học");
+        System.out.println("14.Thống kê số lượng sinh viên theo năm vào học");//done
     }
 
     public void selection() throws IOException {
@@ -52,6 +52,7 @@ public class menu {
                     System.out.print("\tEnter ID of student you want delete: ");
                     int ID = s.nextInt();
                     csv.deleteStudent(ID);
+                    break;
                 }
                 case 5: {
                     System.out.print("-Enter the ID you want to find: ");
@@ -76,7 +77,7 @@ public class menu {
                     break;
                 }
                 case 9:{
-                    csv.percentRankedAcademic();
+                    csv.showPercentRankedAcademic();
                     break;
                 }
                 case 10:{
@@ -87,13 +88,21 @@ public class menu {
                     csv.findSameName();
                     break;
                 }
+                case 12:{
+                    csv.findSameMonth();
+                    break;
+                }
                 case 13:{
                     csv.findNameAn();
                     break;
                 }
+                case 14:{
+                    csv.showPercentYearOfAdmission();
+                    break;
+                }
             }
 
-            System.out.println("\nPRESS KEY 1 TO CONTINUE. PRESS ANY KEY TO EXIT: ");
+            System.out.print("\nPRESS KEY 1 TO CONTINUE. PRESS ANY KEY TO EXIT: ");
             option = s.nextInt();
         } while (option==1);
 
