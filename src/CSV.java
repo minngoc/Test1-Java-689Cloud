@@ -217,37 +217,178 @@ public class CSV {
             writer.write(input); //writing continue to the existed file
         }
     }
+    public void doingUpdate(Student stu){
+        Scanner s = new Scanner(System.in);
+        Student clone=stu;
+        System.out.println("\t1)First name\n" +
+                "\t2)Middle name\n" +
+                "\t3)Last name\n" +
+                "\t4)Day of birth\n" +
+                "\t5)Address\n" +
+                "\t6)Gender\n" +
+                "\t7)ListSubject\n" +
+                "\t8)Year of Admission");
+        int option,choose;
+        do{
+            System.out.print("--Select the option you want to change: ");
+            option = s.nextInt();
+            switch(option){
+                case 1:{
+                    try {
+                        s.nextLine();
+                        System.out.print("-Input new first name: ");
+                        String info=s.nextLine();
+                        clone.setFirstName(info);
+                        arrStudent.remove(stu);
+                        arrStudent.add(clone);
+                        writeFileStudent();
+                        System.out.println("---UPDATE SUCCESS!!!");
+                        System.out.println(clone);
+                    } catch (IOException e) {
+                        //throw new RuntimeException(e);
+                    }
+                    break;
+                }
+                case 2:{
+                    try {
+                        s.nextLine();
+                        System.out.print("-Input new middle name: ");
+                        String info=s.nextLine();
+                        clone.setMiddleName(info);
+                        arrStudent.remove(stu);
+                        arrStudent.add(clone);
+                        writeFileStudent();
+                        System.out.println("---UPDATE SUCCESS!!!");
+                        System.out.println(clone);
+                    } catch (IOException e) {
+                        //throw new RuntimeException(e);
+                    }
+                    break;
+                }
+                case 3:{
+                    try {
+                        s.nextLine();
+                        System.out.print("-Input new last name: ");
+                        String info=s.nextLine();
+                        clone.setLastName(info);
+                        arrStudent.remove(stu);
+                        arrStudent.add(clone);
+                        writeFileStudent();
+                        System.out.println("---UPDATE SUCCESS!!!");
+                        System.out.println(clone);
+                    } catch (IOException e) {
+                        //throw new RuntimeException(e);
+                    }
+                    break;
+                }
+                case 4:{
+                    try {
+                        System.out.println("- Input new Day of birth:");
+                        myDate day = new myDate();
+                        day.inputDay();
+                        clone.setDob(day);
+                        arrStudent.remove(stu);
+                        arrStudent.add(clone);
+                        writeFileStudent();
+                        System.out.println("---UPDATE SUCCESS!!!");
+                        System.out.println(clone);
+                    } catch (IOException e) {
+                        //throw new RuntimeException(e);
+                    }
+                    break;
+                }
+                case 5:{
+                    try {
+                        s.nextLine();
+                        System.out.print("-Input new adress: ");
+                        String info=s.nextLine();
+                        clone.setFirstName(info);
+                        arrStudent.remove(stu);
+                        arrStudent.add(clone);
+                        writeFileStudent();
+                        System.out.println("---UPDATE SUCCESS!!!");
+                        System.out.println(clone);
+                    } catch (IOException e) {
+                        //throw new RuntimeException(e);
+                    }
+                    break;
+                }
+                case 6:{
+                    try {
+                        int Gender;
+                        String gender;
+                        do {
+                            System.out.println("- Select gender ( 1-Male, 0-Female ): ");
+                            Gender = s.nextInt();
+                        } while (Gender != 1 && Gender != 0);
+                        if (Gender == 1) {
+                            gender = "Nam";
+                        } else {
+                            gender = "Nu";
+                        }
+                        clone.setGender(gender);
+                        arrStudent.remove(stu);
+                        arrStudent.add(clone);
+                        writeFileStudent();
+                        System.out.println("---UPDATE SUCCESS!!!");
+                        System.out.println(clone);
+                    } catch (Exception e) {
+                        //throw new RuntimeException(e);
+                    }
+                    break;
+                }
+                case 7:{
+                    try {
+                        System.out.print("- Input new number of Subject: ");
+                        int numSub = s.nextInt();
+                        int numofSub = numSub;
+                        ArrayList<MonHoc> listSubject = new ArrayList<>();
+                        Float totalScore = (float) 0;
+                        do {
+                            MonHoc mh = new MonHoc();
+                            mh.inputSubject();
+                            listSubject.add(mh);
+                            totalScore += mh.getDiem();
+                            numSub--;
+                        } while (numSub > 0);
+                        clone.setDsMonHoc(listSubject);
+                        arrStudent.remove(stu);
+                        arrStudent.add(clone);
+                        writeFileStudent();
+                        System.out.println("---UPDATE SUCCESS!!!");
+                        System.out.println(clone);
+                    } catch (Exception e) {
+                        //throw new RuntimeException(e);
+                    }
+                    break;
+                }
+                case 8:{
+                    try {
+                        //s.nextLine();
+                        System.out.print("-Input new Year of Admission: ");
+                        int info=s.nextInt();
+                        clone.setYearOfAdmission(info);
+                        arrStudent.remove(stu);
+                        arrStudent.add(clone);
+                        writeFileStudent();
+                        System.out.println("---UPDATE SUCCESS!!!");
+                        System.out.println(clone);
+                    } catch (IOException e) {
+                        //throw new RuntimeException(e);
+                    }
+                    break;
+                }
+            }
+            System.out.println("\nPRESS KEY 1 TO CONTINUE UPDATE STUDENT: ");
+            choose = s.nextInt();
+        }while (choose==1);
+    }
     public void updateStudent(Integer ID){
         Student stu = findWithID(ID);
         if(stu==null){
             System.out.println("INVALID STUDENT!!!!");
         }else{
-            Scanner s = new Scanner(System.in);
-            int option;
-            int selection = -1;
-            String info;
-            System.out.println("\t1)First name\n" +
-                                "\t2)Middle name\n" +
-                                "\t3)Last name\n" +
-                                "\t4)Day of birth\n" +
-                                "\t5)Address\n" +
-                                "\t6)Gender\n" +
-                                "\t7)KeySubject\n" +
-                                "\t8)ListSubject\n" +
-                                "\t9)AvgScore\n" +
-                                "\t10)Year of Admission");
-            do{
-                System.out.print("--Select the option you want to change: ");
-                option = s.nextInt();
-            }while (option<1&&option>9);
-            switch (selection){
-                case 1:{
-                    info=s.nextLine();
-                    break;
-                }
-                case 2:
-                case 3:
-            }
+            doingUpdate(stu);
         }
     }
     public void deleteStudent(Integer ID) throws IOException {
@@ -442,7 +583,7 @@ public class CSV {
     public void sortByName() {
         ArrayList<Student> temp=arrStudent;
         Collections.sort(temp, Student.StuNameComparator);
-        System.out.println("AFTER SORT BY LASTNAME");
+        System.out.println("\nAFTER SORT BY LASTNAME");
         for(Student stu: temp){
             String data = stu.getStringId() + "," +
                     stu.getFirstName() + "," +

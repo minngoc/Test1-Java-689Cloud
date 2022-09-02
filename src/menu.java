@@ -101,7 +101,6 @@ public class menu {
                     break;
                 }
             }
-
             System.out.print("\nPRESS KEY 1 TO CONTINUE. PRESS ANY KEY TO EXIT: ");
             option = s.nextInt();
         } while (option==1);

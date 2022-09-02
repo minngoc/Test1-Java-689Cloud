@@ -3,9 +3,9 @@ import java.util.Scanner;
 
 public class MonHoc {
 
-    private String maMH;
+    private String maMH;//ko đc trùng
     private String tenMH;
-    private Float diem;
+    private Float diem;//double
 
     public MonHoc() {
 
